@@ -6,7 +6,6 @@ import { Card } from './ui/card'
 import { Button } from './ui/button'
 import { useState, useRef, useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
-import ReactMarkdown from 'react-markdown'
 import { Textarea } from './ui/textarea'
 import { ChatMessages } from './ChatMessages'
 

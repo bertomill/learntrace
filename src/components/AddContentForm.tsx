@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Content, ContentType } from '@/types/content'
+import type { ContentType } from '@/types/content'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import {
   Select,
@@ -89,12 +89,11 @@ export default function AddContentForm() {
             <label htmlFor="url" className="block text-sm font-medium text-gray-700">
               URL
             </label>
-            <input
+            <Input
               type="url"
               id="url"
               value={url}
               onChange={handleUrlChange}
-              className="mt-1 block w-full p-2 border rounded"
               placeholder="https://example.com"
               required
             />
@@ -104,12 +103,11 @@ export default function AddContentForm() {
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">
               Title
             </label>
-            <input
+            <Input
               type="text"
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mt-1 block w-full p-2 border rounded"
               placeholder="Title"
               required
             />
@@ -119,29 +117,28 @@ export default function AddContentForm() {
             <label htmlFor="type" className="block text-sm font-medium text-gray-700">
               Content Type
             </label>
-            <select
-              id="type"
-              value={type}
-              onChange={(e) => setType(e.target.value as ContentType)}
-              className="mt-1 block w-full p-2 border rounded"
-            >
-              <option>Article</option>
-              <option>Video</option>
-              <option>Paper</option>
-              <option>Book</option>
-              <option>Podcast</option>
-            </select>
+            <Select value={type} onValueChange={(value) => setType(value as ContentType)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Article">Article</SelectItem>
+                <SelectItem value="Video">Video</SelectItem>
+                <SelectItem value="Paper">Paper</SelectItem>
+                <SelectItem value="Book">Book</SelectItem>
+                <SelectItem value="Podcast">Podcast</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
             <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700">
               Source Excerpt
             </label>
-            <textarea
+            <Textarea
               id="excerpt"
               value={excerpt}
               onChange={(e) => setExcerpt(e.target.value)}
-              className="mt-1 block w-full p-2 border rounded"
               placeholder="Paste relevant excerpts from the source here..."
             />
           </div>
@@ -150,11 +147,10 @@ export default function AddContentForm() {
             <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
               Your Notes
             </label>
-            <textarea
+            <Textarea
               id="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="mt-1 block w-full p-2 border rounded"
               placeholder="Your thoughts and notes about this content..."
             />
           </div>

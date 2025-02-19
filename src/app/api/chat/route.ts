@@ -71,8 +71,21 @@ async function getRecentContent(days: number) {
   }))
 }
 
+// Replace any with proper type
+interface WhereClause {
+  OR: Array<{
+    title?: { contains: string }
+    notes?: { contains: string }
+    excerpt?: { contains: string }
+  }>
+  type?: string
+  date_added?: {
+    gte: Date
+  }
+}
+
 async function searchContent(query: string, contentType?: string, daysAgo?: number) {
-  const whereClause: any = {
+  const whereClause: WhereClause = {
     OR: [
       { title: { contains: query } },
       { notes: { contains: query } },
