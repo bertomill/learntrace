@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["learntrace"]
+}
+
+model content {
+  id        String   @id @default(cuid())
+  type      String   // Will be one of: video, article, paper, book, podcast
+  title     String
+  url       String
+  date_added DateTime @default(now()) @map("date_added")
+  notes     String
+  excerpt   String   // Adding this field for source content
+  tags      String[]
+  week_id   String?  @map("week_id")
+  week      week?    @relation(fields: [week_id], references: [id])
+  created_at DateTime @default(now()) @map("created_at")
+
+  @@schema("learntrace")
+}
+
+model week {
+  id         String    @id @default(cuid())
+  week_of    DateTime  @map("week_of")
+  summary    String?
+  contents   content[]
+  created_at DateTime  @default(now()) @map("created_at")
+
+  @@schema("learntrace")
+} 
